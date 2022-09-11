@@ -1,7 +1,7 @@
 from typing import Any
 from faker import Faker
 from datetime import datetime
-import random as r
+import random as r  
 import os
 
 def generate_register_fake(file, fake, qt_register_fake: int):
@@ -35,7 +35,7 @@ def create_file_fake() -> None:
     Funcao que ira gerar uma quantidade N de arquivos com registros fakes.
     """
     fake = Faker('pt-BR')
-    N = 10
+    N = 4
     
     for _ in range(0, N):
         name_file_fake = f'./datasets-fakes/register_people_fake_{datetime.now().strftime("%Y%m%d%H%M%S")}.csv'
