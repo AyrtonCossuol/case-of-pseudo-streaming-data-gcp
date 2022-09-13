@@ -35,7 +35,7 @@ def create_file_fake() -> None:
     Funcao que ira gerar uma quantidade N de arquivos com registros fakes.
     """
     fake = Faker('pt-BR')
-    N = 4
+    N = 6
     
     for _ in range(0, N):
         name_file_fake = f'./datasets-fakes/register_people_fake_{datetime.now().strftime("%Y%m%d%H%M%S")}.csv'
@@ -71,7 +71,24 @@ def send_file_fake() -> None:
     
     return None
 
+def delete_file_fake() -> None:
+    """
+    Funcao que ira deletar os arquivos que foram enviados para bucket
+    """
+    
+    file_path = r'C:\Users\ayrto\OneDrive\Área de Trabalho\students\case-of-pseudo-streaming-data-gcp\datasets-fakes'
+    list_files = os.listdir(file_path)
+    for file in list_files:
+        try:
+            os.remove(os.path.join(file_path, file))
+            print(f"Arquivo {file} removido com sucesso!!")
+        except Exception as e:
+            print(e)
+    
+    return None
+
 if __name__ == '__main__':
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\ayrto\OneDrive\Área de Trabalho\students\project-student-account.json"
-    # create_file_fake()
+    create_file_fake()
     send_file_fake()
+    delete_file_fake()
