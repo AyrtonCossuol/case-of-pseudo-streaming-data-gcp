@@ -1,4 +1,4 @@
-from typing import Any
+from google.cloud import storage
 from faker import Faker
 from datetime import datetime
 import random as r  
@@ -49,6 +49,29 @@ def create_file_fake() -> None:
     
     return None
 
+def send_file_fake() -> None:
+    """
+    Funcao que ira enviar os arquivos gerados para o bucket
+    """
+    storage_client = storage.Client()
+
+    name_bucket = 'project-streaming-batch'
+    file_path = r'C:\Users\ayrto\OneDrive\Área de Trabalho\students\case-of-pseudo-streaming-data-gcp\datasets-fakes'
+    list_files = os.listdir(file_path)
+
+    for file in list_files:
+        try:
+            bucket = storage_client.get_bucket(name_bucket)
+            blob = bucket.blob(f"raw-zone-batch/{file}")
+            blob.upload_from_filename(os.path.join(file_path, file))
+
+            print(f"Arquivo {file} enviado com sucesso!!")
+        except Exception as e:
+            print(e)
+    
+    return None
+
 if __name__ == '__main__':
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\ayrto\OneDrive\Área de Trabalho\students\project-student-account.json"
-    create_file_fake()
+    # create_file_fake()
+    send_file_fake()
